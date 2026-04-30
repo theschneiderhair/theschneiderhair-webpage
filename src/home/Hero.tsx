@@ -20,18 +20,18 @@ export function Hero() {
 
   return (
   <section className="hero-tablet-section relative min-h-[70vh] flex items-center overflow-hidden px-4 sm:px-8 pt-24 pb-8 md:pt-32 md:pb-16">
-    <div className="hero-tablet-grid grid grid-cols-12 w-full max-w-[1720px] mx-auto items-center gap-8 md:gap-12">
+    <div className="hero-tablet-grid grid grid-cols-12 w-full max-w-[1720px] mx-auto items-start gap-8 md:gap-12">
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="hero-tablet-copy col-span-12 md:col-span-6 z-10 space-y-8 md:space-y-12 mt-8 md:mt-0"
+        className="hero-tablet-copy col-span-12 z-10 space-y-8 md:space-y-12 mt-8 md:mt-0"
       >
         <div className="inline-block px-4 py-1.5 bg-stone-100 rounded-full">
           <span className="text-[10px] font-bold tracking-[0.3em] text-stone-500 uppercase">{siteCopy.home.hero.badge}</span>
         </div>
         <div className="relative">
-          <h1 className="relative z-10 text-[13vw] sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.85] text-stone-800 max-w-full pr-[34vw] md:pr-0">
+          <h1 className="relative z-10 text-[13vw] sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.85] text-stone-800 max-w-full pr-[34vw] sm:pr-[30vw] md:pr-[min(38vw,20rem)] lg:pr-[min(42vw,28rem)] xl:pr-120">
             {siteCopy.home.hero.titleLine1}
             <br />
             {siteCopy.home.hero.titleLine2}
@@ -41,7 +41,7 @@ export function Hero() {
           <ImageWithFallback
             src={assetUrl('/media/artist/artist-transparent.png')}
             alt={siteCopy.home.hero.leadArtistPhotoAlt}
-            className="artist-transparent-tablet md:block lg:hidden pointer-events-none select-none absolute right-0 top-1/2 -translate-y-1/2 -scale-x-100 w-[42vw] max-w-[210px] object-contain z-0"
+            className="artist-transparent-tablet pointer-events-none select-none absolute right-0 top-1/2 -translate-y-1/2 -scale-x-100 object-contain z-0 block w-[42vw] max-w-[210px] sm:max-w-[240px] md:max-w-[260px] lg:max-w-[min(520px,44vw)] lg:w-[min(44vw,520px)] xl:max-w-[560px] xl:w-[40vw]"
           />
         </div>
         <p className="text-stone-500 max-w-md leading-relaxed tracking-wide text-sm md:text-base opacity-90 font-light text-justify">
@@ -75,23 +75,23 @@ export function Hero() {
               {siteCopy.home.hero.exploreServices}
             </Link>
           </div>
-      </motion.div>
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut", delay: 0.1 }}
-        ref={heroPhotoRef}
-        className="hero-photo-frame-tablet col-span-12 md:col-span-6 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative w-full mt-4 md:mt-0 rounded-2xl overflow-hidden"
-      >
-        <ImageWithFallback
-          src={assetUrl('/media/artist/artist-hero.png')}
-          alt={siteCopy.home.hero.heroPortraitAlt}
-          className={`hero-photo-tablet w-full h-full object-cover object-top sm:object-center rounded-2xl grayscale transition-all duration-1000 hover:grayscale-0 shadow-2xl ${heroPhotoInView ? 'tablet-scroll-color' : ''}`}
-        />
-        <div className="absolute -bottom-8 -left-8 bg-stone-50 p-8 rounded-xl shadow-xl hidden md:block z-10 w-64">
-          <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-stone-400 mb-2">{siteCopy.home.hero.leadArtistLabel}</p>
-          <h4 className="text-xl font-serif">{siteCopy.home.hero.leadArtistName}</h4>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: 0.1 }}
+          ref={heroPhotoRef}
+          className="hero-lead-artist-frame relative w-full max-w-md mt-8 h-[min(420px,58vh)] sm:h-[min(480px,62vh)] md:h-[min(520px,65vh)] rounded-2xl overflow-hidden shadow-2xl"
+        >
+          <ImageWithFallback
+            src={assetUrl('/media/artist/artist-hero.png')}
+            alt={siteCopy.home.hero.heroPortraitAlt}
+            className={`hero-photo-tablet w-full h-full object-cover object-top sm:object-center rounded-2xl grayscale transition-all duration-1000 hover:grayscale-0 shadow-2xl ${heroPhotoInView ? 'tablet-scroll-color' : ''}`}
+          />
+          <div className="absolute bottom-4 left-4 bg-stone-50 p-6 sm:p-8 rounded-xl shadow-xl z-10 w-56 sm:w-64">
+            <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-stone-400 mb-2">{siteCopy.home.hero.leadArtistLabel}</p>
+            <h4 className="text-xl font-serif">{siteCopy.home.hero.leadArtistName}</h4>
+          </div>
+        </motion.div>
       </motion.div>
     </div>
   </section>

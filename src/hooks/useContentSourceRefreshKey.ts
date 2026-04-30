@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { CONTENT_DATA_SOURCE_MODE_EVENT } from 'artist-portal-sdk';
+import { CONTENT_DATA_SOURCE_MODE_EVENT } from '@dmnstr8/artist-portal-sdk';
 
 /** Bumps when the admin toggles local vs cloud content source in this browser. */
 export function useContentSourceRefreshKey(): number {

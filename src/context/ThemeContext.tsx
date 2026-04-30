@@ -4,7 +4,7 @@
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { getSettingsWithFallback } from 'artist-portal-sdk';
+import { getSettingsWithFallback } from '@dmnstr8/artist-portal-sdk';
 
 export const THEME_STORAGE_KEY = 'theschneider.theme';
 

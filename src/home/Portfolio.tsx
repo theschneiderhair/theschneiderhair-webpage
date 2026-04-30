@@ -14,7 +14,7 @@ import {
   GALLERY_HOME_UPDATED_EVENT,
   getGalleryHomeWithFallback,
   getSettingsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import { normalizeMediaStorageRoot, resolveGalleryImageSrc } from '../lib/galleryHome';
 import type { GalleryHomeData } from '../types/domain';
 

@@ -7,7 +7,7 @@ import {
   CONTENT_DATA_SOURCE_MODE_EVENT,
   getArtistProfilesWithFallback,
   getSettingsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import type { ArtistProfile } from '../types/domain';
 import { useSiteCopy } from '../context/SiteCopyContext';
 import { normalizeMediaStorageRoot, resolveMediaSrc } from '../lib/galleryHome';

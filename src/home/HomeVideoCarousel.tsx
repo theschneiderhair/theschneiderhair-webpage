@@ -12,7 +12,7 @@ import {
   hasConsentFor,
   openConsentPreferences,
 } from '../lib/cookieConsent';
-import { getWidgetsWithFallback } from 'artist-portal-sdk';
+import { getWidgetsWithFallback } from '@dmnstr8/artist-portal-sdk';
 
 export function HomeVideoCarousel() {
   const { siteCopy } = useSiteCopy();

@@ -1,9 +1,11 @@
 {
-  "projectId": "theschneiderhair-dev-23863",
-  "appId": "1:129705359867:web:fe958b822c0718f44bb35e",
-  "apiKey": "AIzaSyAeOr0lR52OldXFMGhgzcf81oThpwl_csQ",
-  "authDomain": "theschneiderhair-dev-23863.firebaseapp.com",
+  "projectId": "theschneiderhair-dev",
+  "appId": "1:591321025859:web:a2ca61060ca9422491b3f6",
+  "apiKey": "AIzaSyA26sstGYjPuX5HOHUw0NsddPoqQApKfKk",
+  "authDomain": "theschneiderhair-dev.firebaseapp.com",
   "firestoreDatabaseId": "(default)",
-  "storageBucket": "theschneiderhair-dev-23863.firebasestorage.app",
-  "messagingSenderId": "129705359867"
+  "storageBucket": "theschneiderhair-dev.firebasestorage.app",
+  "messagingSenderId": "591321025859"
 }
+
+

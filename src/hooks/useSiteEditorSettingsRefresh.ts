@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SITE_EDITOR_SETTINGS_CHANGED } from 'artist-portal-sdk';
+import { SITE_EDITOR_SETTINGS_CHANGED } from '@dmnstr8/artist-portal-sdk';
 
 /** Bumps when admin saves location / gallery / page text to localStorage in this browser. */
 export function useSiteEditorSettingsRefresh() {

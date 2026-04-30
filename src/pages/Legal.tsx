@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import React, { useEffect, useMemo, useState } from 'react';
-import { getPageTextSiteEditorSettings, SITE_EDITOR_SETTINGS_CHANGED } from 'artist-portal-sdk';
+import { getPageTextSiteEditorSettings, SITE_EDITOR_SETTINGS_CHANGED } from '@dmnstr8/artist-portal-sdk';
 import { legalSiteCopy } from '../content/legalSiteCopy';
 import { GdprSectionBlocksView, type GdprSectionBlocks } from '../content/GdprSectionBlocks';
 

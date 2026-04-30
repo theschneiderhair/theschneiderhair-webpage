@@ -18,7 +18,7 @@ import {
   SHOW_PRODUCTS_PAGE_EVENT,
   SHOW_THEME_SELECTOR_EVENT,
   getSettingsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import { shouldUseHashRouting } from '../lib/shouldUseHashRouting';
 
 import type { NavLinkItem } from './navTypes';

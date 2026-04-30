@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import type { DocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
-import { getContentDataSourceMode, getPortalFirebase } from 'artist-portal-sdk';
+import { getContentDataSourceMode, getPortalFirebase } from '@dmnstr8/artist-portal-sdk';
 
 /**
  * Mirrors Artist Portal “all sources live” LED: Firebase is the active content mode

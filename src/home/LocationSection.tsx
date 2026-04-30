@@ -13,7 +13,7 @@ import {
   getLocationSiteEditorSettings,
   resolveGoogleMapsOpenUrl,
   resolveMapsIframeSrc,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 
 export function LocationSection() {
   const { siteCopy } = useSiteCopy();

@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
 import { syncSalonizedWidgetFromWidgets } from '../lib/salonizedBookingWidget';
-import { getWidgetsWithFallback } from 'artist-portal-sdk';
+import { getWidgetsWithFallback } from '@dmnstr8/artist-portal-sdk';
 
 export function WidgetManager() {
   const { pathname } = useLocation();

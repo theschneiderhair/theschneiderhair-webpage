@@ -14,7 +14,7 @@ import {
   getFaqWithFallback,
   getSettingsWithFallback,
   getWidgetsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import { alertDialog } from '../shared/ui/dialogs';
 import {
   COOKIE_CONSENT_UPDATED_EVENT,

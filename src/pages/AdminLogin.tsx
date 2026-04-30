@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Lock, User, ArrowRight, AlertCircle, Mail } from 'lucide-react';
-import { CONTENT_DATA_SOURCE_MODE_EVENT, getContentDataSourceMode } from 'artist-portal-sdk';
+import { CONTENT_DATA_SOURCE_MODE_EVENT, getContentDataSourceMode } from '@dmnstr8/artist-portal-sdk';
 import { probeAdminCloudHealthAllSourcesLive } from '../lib/adminCloudHealthLedProbe';
 import { useSiteCopy } from '../context/SiteCopyContext';
 

@@ -7,7 +7,7 @@ import {
   CONTENT_DATA_SOURCE_MODE_EVENT,
   getProductStorefrontCategoriesWithFallback,
   getSettingsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import type { ProductStorefrontCategory } from '../types/domain';
 import { formatCopy } from '../content/siteCopy';
 import { useSiteCopy } from '../context/SiteCopyContext';

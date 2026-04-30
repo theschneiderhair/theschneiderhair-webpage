@@ -5,7 +5,7 @@ import {
   CONTENT_DATA_SOURCE_MODE_EVENT,
   getVideoLinksWithFallback,
   videoLinksToYoutubeIds,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import { formatCopy } from '../content/siteCopy';
 import { useSiteCopy } from '../context/SiteCopyContext';
 

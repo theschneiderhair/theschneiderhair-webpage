@@ -2,7 +2,7 @@
  * @license Apache-2.0
  */
 
-import { normalizeGalleryHomeData, normalizeMediaStorageRoot } from 'artist-portal-sdk';
+import { normalizeGalleryHomeData, normalizeMediaStorageRoot } from '@dmnstr8/artist-portal-sdk';
 import { assetUrl } from '../shared/utils/assetUrl';
 
 export type MediaBucket = 'gallery' | 'artist' | 'products';

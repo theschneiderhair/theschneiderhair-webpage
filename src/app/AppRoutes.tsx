@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from 'artist-portal-sdk/admin';
+import { ProtectedRoute } from '@dmnstr8/artist-portal-sdk/admin';
 import RouteLoadingFallback from '../shared/ui/RouteLoadingFallback';
 
 type PageComponent = React.ComponentType;

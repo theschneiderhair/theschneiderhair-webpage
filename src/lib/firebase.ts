@@ -1,5 +1,5 @@
-import type { ArtistPortalFirebaseConfig } from 'artist-portal-sdk';
-import { createArtistPortalClients, registerPortalFirebase, resolveFirebaseTarget } from 'artist-portal-sdk';
+import type { ArtistPortalFirebaseConfig } from '@dmnstr8/artist-portal-sdk';
+import { createArtistPortalClients, registerPortalFirebase, resolveFirebaseTarget } from '@dmnstr8/artist-portal-sdk';
 import productionConfig from '../../firebase-applet-config.production.json';
 import releaseConfig from '../../firebase-applet-config.release.json';
 

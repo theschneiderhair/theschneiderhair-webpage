@@ -4,9 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prebuild": "pnpm --filter artist-portal-sdk run build",
-    "prebuild:production": "pnpm --filter artist-portal-sdk run build",
-    "prebuild:release": "pnpm --filter artist-portal-sdk run build",
     "dev": "vite --port=3000 --host=0.0.0.0",
     "dev:release": "vite --port=4000 --host=0.0.0.0 --mode release",
     "build": "vite build --mode production",
@@ -16,20 +13,20 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "artist-portal-sdk": "workspace:*",
-    "@tailwindcss/vite": "^4.1.14",
+    "@dmnstr8/artist-portal-sdk": "^0.1.10",
+    "@tailwindcss/vite": "^4.2.4",
     "firebase": "^12.12.1",
     "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.14.1"
+    "motion": "^12.38.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.4",
-    "tailwindcss": "^4.1.14",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "@types/node": "^22.19.17",
+    "@vitejs/plugin-react": "^5.2.0",
+    "tailwindcss": "^4.2.4",
+    "typescript": "~5.8.3",
+    "vite": "^6.4.2"
   }
 }

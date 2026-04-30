@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 
 import { auth } from '../lib/firebase';
-import { AUTO_LOGOUT_LEAVING_ADMIN_EVENT, getSettingsWithFallback } from 'artist-portal-sdk';
+import { AUTO_LOGOUT_LEAVING_ADMIN_EVENT, getSettingsWithFallback } from '@dmnstr8/artist-portal-sdk';
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
 
 /** Signs out when navigating off admin routes if the General Settings option is enabled. */

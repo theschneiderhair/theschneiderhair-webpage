@@ -55,4 +55,4 @@ const RecommendedProductsPage = React.lazy(() => import('./pages/RecommendedProd
 const LegalPage = React.lazy(() => import('./pages/Legal'));
 const TermsPage = React.lazy(() => import('./pages/Terms'));
 const AdminLoginPage = React.lazy(() => import('./pages/AdminLogin'));
-const AdminDashboardPage = React.lazy(() => import('artist-portal-sdk/admin'));
+const AdminDashboardPage = React.lazy(() => import('@dmnstr8/artist-portal-sdk/admin'));

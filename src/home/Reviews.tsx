@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSiteCopy } from '../context/SiteCopyContext';
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
 import { formatCopy } from '../content/siteCopy';
-import { getReviewsWithFallback } from 'artist-portal-sdk';
+import { getReviewsWithFallback } from '@dmnstr8/artist-portal-sdk';
 
 export function Reviews() {
   const { siteCopy } = useSiteCopy();

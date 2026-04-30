@@ -11,7 +11,7 @@ import {
   SHOW_REVIEWS_SECTION_EVENT,
   SHOW_VIDEO_SECTION_EVENT,
   getSettingsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
 
 import { AboutArtist } from './AboutArtist';

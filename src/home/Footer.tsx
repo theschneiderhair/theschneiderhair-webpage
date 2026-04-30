@@ -15,7 +15,7 @@ import {
   getLocationSiteEditorSettings,
   getPageTextSiteEditorSettings,
   getSettingsWithFallback,
-} from 'artist-portal-sdk';
+} from '@dmnstr8/artist-portal-sdk';
 
 export function Footer() {
   const { siteCopy } = useSiteCopy();
