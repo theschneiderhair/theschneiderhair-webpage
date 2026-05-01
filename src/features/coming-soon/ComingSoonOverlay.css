@@ -1,0 +1,222 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+body.coming-soon-active {
+  overflow: hidden;
+}
+
+body.coming-soon-active #salonized-widget {
+  display: none !important;
+}
+
+.coming-soon {
+  --cs-bg: #fbf9f8;
+  --cs-text: #1f1f1f;
+  --cs-muted: #8c8c8c;
+  --cs-accent: #111111;
+
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cs-bg);
+  color: var(--cs-text);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.coming-soon *,
+.coming-soon *::before,
+.coming-soon *::after {
+  box-sizing: border-box;
+}
+
+.coming-soon header {
+  height: 90px;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.coming-soon .brand {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 30px;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+}
+
+.coming-soon .nav {
+  display: flex;
+  gap: 34px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.coming-soon main {
+  min-height: calc(100vh - 90px);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  padding: 70px 8vw;
+  gap: 40px;
+}
+
+.coming-soon .eyebrow {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.035);
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin-bottom: 42px;
+}
+
+.coming-soon h1 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-size: clamp(64px, 8vw, 135px);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+}
+
+.coming-soon h1 span {
+  display: block;
+  font-style: italic;
+  color: #d8d5d4;
+}
+
+.coming-soon .copy {
+  max-width: 520px;
+  margin-top: 48px;
+  color: var(--cs-muted);
+  font-size: 17px;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+}
+
+.coming-soon .actions {
+  margin-top: 46px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.coming-soon .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 42px;
+  background: var(--cs-accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.12);
+}
+
+.coming-soon .note {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #c7c1bf;
+  border-bottom: 1px solid #e6dfdc;
+  padding-bottom: 8px;
+}
+
+.coming-soon .visual {
+  position: relative;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon .hero-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.coming-soon .hero-image--bypass {
+  cursor: default;
+  user-select: none;
+}
+
+.coming-soon .floating-card {
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+  width: 260px;
+  padding: 28px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
+}
+
+.coming-soon .floating-card strong {
+  display: block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.coming-soon .floating-card p {
+  margin: 0;
+  color: var(--cs-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.coming-soon footer {
+  position: fixed;
+  left: 48px;
+  bottom: 28px;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #b8b2af;
+}
+
+@media (max-width: 900px) {
+  .coming-soon header {
+    padding: 0 24px;
+  }
+
+  .coming-soon .nav {
+    display: none;
+  }
+
+  .coming-soon main {
+    grid-template-columns: 1fr;
+    padding: 48px 28px 100px;
+  }
+
+  .coming-soon .visual {
+    min-height: 320px;
+  }
+
+  .coming-soon .floating-card {
+    left: 0;
+    bottom: 0;
+  }
+
+  .coming-soon footer {
+    position: static;
+    padding: 0 28px 28px;
+  }
+}
