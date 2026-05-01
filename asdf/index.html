@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>theschneider.hair — Coming Soon</title>
+
+  <!-- FAVICON (scissors) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+    <circle cx='30' cy='30' r='12' fill='black'/>
+    <circle cx='30' cy='70' r='12' fill='black'/>
+    <line x1='42' y1='32' x2='85' y2='10' stroke='black' stroke-width='6'/>
+    <line x1='42' y1='68' x2='85' y2='90' stroke='black' stroke-width='6'/>
+  </svg>" />
+
+  <style>
+    :root {
+      --bg: #fbf9f8;
+      --text: #1f1f1f;
+      --muted: #8c8c8c;
+      --soft: #e8e3e1;
+      --accent: #111111;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    header {
+      height: 90px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      letter-spacing: 0.12em;
+      font-weight: 400;
+    }
+
+    .nav {
+      display: flex;
+      gap: 34px;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    main {
+      min-height: calc(100vh - 90px);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      padding: 70px 8vw;
+      gap: 40px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.035);
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 42px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(64px, 8vw, 135px);
+      line-height: 0.9;
+      letter-spacing: -0.055em;
+    }
+
+    h1 span {
+      display: block;
+      font-style: italic;
+      color: #d8d5d4;
+    }
+
+    .copy {
+      max-width: 520px;
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0.02em;
+    }
+
+    .actions {
+      margin-top: 46px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 42px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.12);
+    }
+
+    .note {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c7c1bf;
+      border-bottom: 1px solid #e6dfdc;
+      padding-bottom: 8px;
+    }
+
+    .visual {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* NEW IMAGE STYLE */
+    .hero-image {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .floating-card {
+      position: absolute;
+      bottom: 50px;
+      left: 20px;
+      width: 260px;
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.08);
+    }
+
+    .floating-card strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .floating-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      position: fixed;
+      left: 48px;
+      bottom: 28px;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #b8b2af;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        padding: 0 24px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        padding: 48px 28px 100px;
+      }
+
+      .visual {
+        min-height: 320px;
+      }
+
+      .floating-card {
+        left: 0;
+        bottom: 0;
+      }
+
+      footer {
+        position: static;
+        padding: 0 28px 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">theschneider.hair</div>
+
+    <nav class="nav">
+      <span>Berlin</span>
+      <span>Blonding</span>
+      <span>Extensions</span>
+      <span>Soon</span>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="eyebrow">Berlin Friedrichshain</div>
+
+      <h1>
+        Master
+        <br />
+        Blonding &
+        <span>Extensions</span>
+      </h1>
+
+      <p class="copy">
+        A new digital home for theschneider.hair is coming soon.
+        High-end blonding, premium extensions, education, products,
+        and booking access will be available here shortly.
+      </p>
+
+      <div class="actions">
+        <a class="button" href="mailto:hello@theschneiderhair.com">Contact</a>
+        <span class="note">Coming Soon</span>
+      </div>
+    </section>
+
+    <section class="visual" aria-hidden="true">
+      <!-- REPLACED CIRCLE WITH IMAGE -->
+      <img src="artist-hero.png" alt="Artist" class="hero-image" />
+
+      <div class="floating-card">
+        <strong>soon</strong>
+        <p>
+          Minimal, refined, and built for the next chapter of
+          theschneider.hair.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    theschneider.hair
+  </footer>
+</body>
+</html>

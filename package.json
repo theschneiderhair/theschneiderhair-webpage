@@ -4,13 +4,28 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    
     "dev": "vite --port=3000 --host=0.0.0.0",
     "dev:release": "vite --port=4000 --host=0.0.0.0 --mode release",
+    
     "build": "vite build --mode production",
     "build:production": "vite build --mode production",
     "build:release": "vite build --mode release",
+    
     "preview": "vite preview --port=3000",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+
+    "deploy:rules": "pnpm run deploy:rules:production",
+    "deploy:rules:production": "firebase deploy --only firestore:rules -P production",
+    "deploy:rules:release": "firebase deploy --only firestore:rules -P release",
+    
+    "deploy:hosting:production": "pnpm run build:production && firebase deploy --only hosting -P production",
+    "deploy:hosting:release": "pnpm run build:release && firebase deploy --only hosting -P release",
+    "deploy:live": "pnpm run deploy:hosting:release"
+  
+  
+  
+  
   },
   "dependencies": {
     "@dmnstr8/artist-portal-sdk": "^0.1.10",
@@ -25,6 +40,7 @@
   "devDependencies": {
     "@types/node": "^22.19.17",
     "@vitejs/plugin-react": "^5.2.0",
+    "firebase-tools": "^15.16.0",
     "tailwindcss": "^4.2.4",
     "typescript": "~5.8.3",
     "vite": "^6.4.2"
