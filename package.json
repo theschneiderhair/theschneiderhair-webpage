@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "node scripts/assert-no-self-dependency.mjs",
     "dev": "vite --port=3000 --host=0.0.0.0 --mode production",
     "dev:release": "vite --port=4000 --host=0.0.0.0 --mode release",
     "build": "vite build --mode production",
     "build:release": "vite build --mode release",
     "deploy:hosting:release": "pnpm run build:release && firebase deploy --only hosting -P release",
-    "deploy:hosting:preview:release": "pnpm run build:release && firebase hosting:channel:deploy preview -P release",
+    "deploy:hosting:preview": "pnpm run build:release && firebase hosting:channel:deploy preview -P release",
     "deploy:live": "pnpm run deploy:hosting:release",
     "preview": "vite preview --port=3000",
     "lint": "tsc --noEmit",
@@ -24,11 +25,12 @@
     "motion": "^12.38.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2",
-    "theschneider.hair": "link:"
+    "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
     "@types/node": "^22.19.17",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
     "firebase-tools": "^15.16.0",
     "tailwindcss": "^4.2.4",
