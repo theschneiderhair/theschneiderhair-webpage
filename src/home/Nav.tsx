@@ -11,14 +11,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSiteCopy } from '../context/SiteCopyContext';
 import { useTheme } from '../context/ThemeContext';
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
-import {
-  SHOW_ARTISTS_PAGE_EVENT,
-  SHOW_FAQ_PAGE_EVENT,
-  SHOW_PRICING_SECTION_EVENT,
-  SHOW_PRODUCTS_PAGE_EVENT,
-  SHOW_THEME_SELECTOR_EVENT,
-  getSettingsWithFallback,
-} from '@dmnstr8/artist-portal-sdk';
+import { getSettingsWithFallback } from '../lib/publicData';
 import { shouldUseHashRouting } from '../lib/shouldUseHashRouting';
 
 import type { NavLinkItem } from './navTypes';
@@ -32,8 +25,9 @@ export function Nav() {
   const [showProductsPage, setShowProductsPage] = useState(true);
   const [showPricingSection, setShowPricingSection] = useState(true);
   const [showFaqPage, setShowFaqPage] = useState(true);
+  const [showBookSection, setShowBookSection] = useState(true);
+  const [showClassesSection, setShowClassesSection] = useState(true);
   const location = useLocation();
-  const isAdminRoute = location.pathname.includes('artist-portal');
   const { mode, toggle } = useTheme();
   const useHashNavigation = shouldUseHashRouting();
   const contentSourceRefreshKey = useContentSourceRefreshKey();
@@ -79,66 +73,13 @@ export function Nav() {
       setShowProductsPage(settings.showProductsPage !== false);
       setShowPricingSection(settings.showPricingSection !== false);
       setShowFaqPage(settings.showFaqPage !== false);
+      setShowBookSection(settings.showBookSection !== false);
+      setShowClassesSection(settings.showClassesSection !== false);
     })();
     return () => {
       cancelled = true;
     };
   }, [contentSourceRefreshKey]);
-
-  useEffect(() => {
-    const onSetting = (e: Event) => {
-      const ce = e as CustomEvent<{ showThemeSelector?: boolean }>;
-      if (typeof ce.detail?.showThemeSelector === 'boolean') {
-        setShowThemeSelector(ce.detail.showThemeSelector);
-      }
-    };
-    window.addEventListener(SHOW_THEME_SELECTOR_EVENT, onSetting as EventListener);
-    return () => window.removeEventListener(SHOW_THEME_SELECTOR_EVENT, onSetting as EventListener);
-  }, []);
-
-  useEffect(() => {
-    const onSetting = (e: Event) => {
-      const ce = e as CustomEvent<{ showProductsPage?: boolean }>;
-      if (typeof ce.detail?.showProductsPage === 'boolean') {
-        setShowProductsPage(ce.detail.showProductsPage);
-      }
-    };
-    window.addEventListener(SHOW_PRODUCTS_PAGE_EVENT, onSetting as EventListener);
-    return () => window.removeEventListener(SHOW_PRODUCTS_PAGE_EVENT, onSetting as EventListener);
-  }, []);
-
-  useEffect(() => {
-    const onSetting = (e: Event) => {
-      const ce = e as CustomEvent<{ showPricingSection?: boolean }>;
-      if (typeof ce.detail?.showPricingSection === 'boolean') {
-        setShowPricingSection(ce.detail.showPricingSection);
-      }
-    };
-    window.addEventListener(SHOW_PRICING_SECTION_EVENT, onSetting as EventListener);
-    return () => window.removeEventListener(SHOW_PRICING_SECTION_EVENT, onSetting as EventListener);
-  }, []);
-
-  useEffect(() => {
-    const onSetting = (e: Event) => {
-      const ce = e as CustomEvent<{ showFaqPage?: boolean }>;
-      if (typeof ce.detail?.showFaqPage === 'boolean') {
-        setShowFaqPage(ce.detail.showFaqPage);
-      }
-    };
-    window.addEventListener(SHOW_FAQ_PAGE_EVENT, onSetting as EventListener);
-    return () => window.removeEventListener(SHOW_FAQ_PAGE_EVENT, onSetting as EventListener);
-  }, []);
-
-  useEffect(() => {
-    const onSetting = (e: Event) => {
-      const ce = e as CustomEvent<{ showArtistsPage?: boolean }>;
-      if (typeof ce.detail?.showArtistsPage === 'boolean') {
-        setShowArtistsPage(ce.detail.showArtistsPage);
-      }
-    };
-    window.addEventListener(SHOW_ARTISTS_PAGE_EVENT, onSetting as EventListener);
-    return () => window.removeEventListener(SHOW_ARTISTS_PAGE_EVENT, onSetting as EventListener);
-  }, []);
 
   const handleScrollClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     // Immediate menu close for responsive feel
@@ -219,23 +160,25 @@ export function Nav() {
     ...(showFaqPage
       ? [
           { label: navLinkCopy.educationFaq, href: '/education' },
-          { label: navLinkCopy.ebook, href: '/education#ebook' },
-          {
-            label: navLinkCopy.eventTickets,
-            desktopLabel: (
-              <>
-                {navLinkCopy.eventTicketsDesktopLine1}
-                <br />
-                {navLinkCopy.eventTicketsDesktopLine2}
-              </>
-            ),
-            href: '/education#events',
-          },
+          ...(showBookSection ? [{ label: navLinkCopy.ebook, href: '/education#ebook' }] : []),
+          ...(showClassesSection
+            ? [
+                {
+                  label: navLinkCopy.eventTickets,
+                  desktopLabel: (
+                    <>
+                      {navLinkCopy.eventTicketsDesktopLine1}
+                      <br />
+                      {navLinkCopy.eventTicketsDesktopLine2}
+                    </>
+                  ),
+                  href: '/education#events',
+                },
+              ]
+            : []),
         ]
       : []),
   ];
-
-  if (isAdminRoute) return null;
 
   const drawerEase = [0.22, 1, 0.36, 1] as const;
   const drawerTransition = reduceMotion

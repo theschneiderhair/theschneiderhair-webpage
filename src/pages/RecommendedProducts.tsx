@@ -3,11 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ShoppingBag, ArrowUpRight, Instagram, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ImageWithFallback from '../components/ImageWithFallback';
-import {
-  CONTENT_DATA_SOURCE_MODE_EVENT,
-  getProductStorefrontCategoriesWithFallback,
-  getSettingsWithFallback,
-} from '@dmnstr8/artist-portal-sdk';
+import { getProductStorefrontCategoriesWithFallback, getSettingsWithFallback } from '../lib/publicData';
 import type { ProductStorefrontCategory } from '../types/domain';
 import { formatCopy } from '../content/siteCopy';
 import { useSiteCopy } from '../context/SiteCopyContext';
@@ -17,7 +13,6 @@ const RecommendedProducts = () => {
   const { siteCopy } = useSiteCopy();
   const [categories, setCategories] = useState<ProductStorefrontCategory[]>([]);
   const [mediaStorageRoot, setMediaStorageRoot] = useState('');
-  const [refreshKey, setRefreshKey] = useState(0);
 
   const orderedCategories = useMemo(
     () =>
@@ -43,12 +38,6 @@ const RecommendedProducts = () => {
     return () => {
       cancelled = true;
     };
-  }, [refreshKey]);
-
-  useEffect(() => {
-    const onChanged = () => setRefreshKey((k) => k + 1);
-    window.addEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
-    return () => window.removeEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
   }, []);
 
   const brands = siteCopy.recommendedProductsPage.brands;

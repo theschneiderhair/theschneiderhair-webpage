@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 import { useSiteCopy } from '../context/SiteCopyContext';
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
-import { getServicesWithSourceWithFallback } from '@dmnstr8/artist-portal-sdk';
+import { getServicesWithSourceWithFallback } from '../lib/publicData';
 
 export function Services() {
   const { siteCopy } = useSiteCopy();

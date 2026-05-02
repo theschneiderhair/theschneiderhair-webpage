@@ -1,15 +1,19 @@
 {
-  "contactEmail": "theschneiderhair@gmail.com",
+  "contactEmail": "info@theschneiderhair.com",
   "themeDefault": "light",
   "mediaStorageRoot": "media",
-  "autoLogoutLeavingAdmin": true,
+  "autoLogoutLeavingAdmin": false,
   "showThemeSelector": false,
   "showArtistsPage": true,
   "showProductsPage": true,
   "showReviewsSection": true,
   "showPricingSection": true,
-  "showVideoSection": true,
+  "roundPricesUpToWholeAmount": false,
+  "showVideoSection": false,
+  "showInstagramTagbox": true,
   "showGallerySection": true,
   "showFaqPage": true,
+  "showClassesSection": false,
+  "showBookSection": true,
   "showContactForm": true
 }

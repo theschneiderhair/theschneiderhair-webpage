@@ -9,7 +9,7 @@ import {
   hasConsentFor,
   openConsentPreferences,
 } from './cookieConsent';
-import { getWidgetsWithFallback } from '@dmnstr8/artist-portal-sdk';
+import { getWidgetsWithFallback } from './publicData';
 
 const DEFAULT_SALONIZED_SCRIPT_SRC = 'https://static-widget.salonized.com/loader.js';
 const DEFAULT_SALONIZED_COMPANY = 'm2yzkzSecfyaghBe93MNZGuc';

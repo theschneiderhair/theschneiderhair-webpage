@@ -4,7 +4,8 @@
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { getSettingsWithFallback } from '@dmnstr8/artist-portal-sdk';
+
+import { getSettingsWithFallback } from '../lib/publicData';
 
 export const THEME_STORAGE_KEY = 'theschneider.theme';
 
@@ -60,7 +61,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyThemeToDocument(mode);
   }, [mode]);
 
-  /** When the visitor has not chosen a theme, sync from the cloud (then JSON fallback). */
+  /** When the visitor has not chosen a theme, sync from `public/data/settings.json`. */
   useEffect(() => {
     const stored = readStoredUserTheme();
     if (stored) {

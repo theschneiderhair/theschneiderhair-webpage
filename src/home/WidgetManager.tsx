@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useContentSourceRefreshKey } from '../hooks/useContentSourceRefreshKey';
 import { syncSalonizedWidgetFromWidgets } from '../lib/salonizedBookingWidget';
-import { getWidgetsWithFallback } from '@dmnstr8/artist-portal-sdk';
+import { getWidgetsWithFallback } from '../lib/publicData';
 
 export function WidgetManager() {
   const { pathname } = useLocation();
@@ -29,8 +29,7 @@ export function WidgetManager() {
   }, [contentSourceRefreshKey]);
 
   useEffect(() => {
-    const isAdminRoute = pathname.includes('artist-portal') || pathname.includes('artist-login');
-    const isHomepage = pathname === '/';
+    const isHomepage = pathname === '/' || pathname === '/index.html' || pathname === '/docs/index.html';
     const commonSelector =
       '#salonized-widget, .salonized-booking, .sz-booking-button, .salonized-booking-button, iframe[src*="salonized.com"]';
 
@@ -54,15 +53,9 @@ export function WidgetManager() {
       const hideForMobileHomeTop = isMobile && isHomepage && window.scrollY <= 8 && !bookingIntentActive;
 
       ensureStyle(
-        'hide-booking-widget-admin',
-        `${commonSelector}{display:none!important;visibility:hidden!important;pointer-events:none!important;opacity:0!important;}`,
-        isAdminRoute
-      );
-
-      ensureStyle(
         'hide-booking-widget-mobile-home-top',
         `${commonSelector}{display:none!important;visibility:hidden!important;pointer-events:none!important;opacity:0!important;}`,
-        !isAdminRoute && hideForMobileHomeTop
+        hideForMobileHomeTop
       );
 
       ensureStyle(

@@ -8,17 +8,17 @@ import { ArrowRight, Clock, MapPin } from 'lucide-react';
 import { useMemo } from 'react';
 
 import { useSiteCopy } from '../context/SiteCopyContext';
-import { useSiteEditorSettingsRefresh } from '../hooks/useSiteEditorSettingsRefresh';
-import {
-  getLocationSiteEditorSettings,
-  resolveGoogleMapsOpenUrl,
-  resolveMapsIframeSrc,
-} from '@dmnstr8/artist-portal-sdk';
+import { resolveGoogleMapsOpenUrl, resolveMapsIframeSrc } from '../lib/mapsUrls';
+import { DEFAULT_SITE_LOCATION } from '../lib/publicData';
+import type { SiteLocationSettings } from '../types/domain';
 
 export function LocationSection() {
   const { siteCopy } = useSiteCopy();
-  const siteEditorKey = useSiteEditorSettingsRefresh();
-  const loc = useMemo(() => getLocationSiteEditorSettings(), [siteEditorKey]);
+  const loc = useMemo<SiteLocationSettings>(
+    () => ({ ...DEFAULT_SITE_LOCATION, ...siteCopy.siteLocation }),
+    [siteCopy],
+  );
+
   const iframeSrc = useMemo(() => resolveMapsIframeSrc(loc), [loc]);
   const mapsOpenUrl = useMemo(() => resolveGoogleMapsOpenUrl(loc), [loc]);
 

@@ -3,20 +3,16 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, Calendar, Globe, Instagram, Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ImageWithFallback from '../components/ImageWithFallback';
-import {
-  CONTENT_DATA_SOURCE_MODE_EVENT,
-  getArtistProfilesWithFallback,
-  getSettingsWithFallback,
-} from '@dmnstr8/artist-portal-sdk';
+import { getArtistProfilesWithFallback, getSettingsWithFallback } from '../lib/publicData';
 import type { ArtistProfile } from '../types/domain';
 import { useSiteCopy } from '../context/SiteCopyContext';
-import { normalizeMediaStorageRoot, resolveMediaSrc } from '../lib/galleryHome';
+import { normalizeMediaStorageRoot } from '../lib/publicData';
+import { resolveMediaSrc } from '../lib/galleryHome';
 
 export default function Artists() {
   const { siteCopy } = useSiteCopy();
   const [artists, setArtists] = useState<ArtistProfile[]>([]);
   const [mediaStorageRoot, setMediaStorageRoot] = useState('');
-  const [refreshKey, setRefreshKey] = useState(0);
   const [expandedArtistId, setExpandedArtistId] = useState<string | null>(null);
   const orderedArtists = useMemo(
     () =>
@@ -42,12 +38,6 @@ export default function Artists() {
     return () => {
       cancelled = true;
     };
-  }, [refreshKey]);
-
-  useEffect(() => {
-    const onChanged = () => setRefreshKey((k) => k + 1);
-    window.addEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
-    return () => window.removeEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
   }, []);
 
   const handleCardClick = (event: React.MouseEvent<HTMLElement>, artistId: string, hasBio: boolean) => {

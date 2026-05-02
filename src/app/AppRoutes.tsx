@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from '@dmnstr8/artist-portal-sdk/admin';
+
 import RouteLoadingFallback from '../shared/ui/RouteLoadingFallback';
 
 type PageComponent = React.ComponentType;
@@ -10,10 +10,6 @@ interface AppRoutesProps {
   ArtistsPage: PageComponent;
   EducationFAQPage: PageComponent;
   RecommendedProductsPage: PageComponent;
-  LegalPage: PageComponent;
-  TermsPage: PageComponent;
-  AdminLoginPage: PageComponent;
-  AdminDashboardPage: PageComponent;
 }
 
 export default function AppRoutes({
@@ -21,10 +17,6 @@ export default function AppRoutes({
   ArtistsPage,
   EducationFAQPage,
   RecommendedProductsPage,
-  LegalPage,
-  TermsPage,
-  AdminLoginPage,
-  AdminDashboardPage,
 }: AppRoutesProps) {
   return (
     <Routes>
@@ -53,40 +45,6 @@ export default function AppRoutes({
           <React.Suspense fallback={<RouteLoadingFallback />}>
             <RecommendedProductsPage />
           </React.Suspense>
-        }
-      />
-      <Route
-        path="/legal"
-        element={
-          <React.Suspense fallback={<RouteLoadingFallback />}>
-            <LegalPage />
-          </React.Suspense>
-        }
-      />
-      <Route
-        path="/terms"
-        element={
-          <React.Suspense fallback={<RouteLoadingFallback />}>
-            <TermsPage />
-          </React.Suspense>
-        }
-      />
-      <Route
-        path="/artist-login"
-        element={
-          <React.Suspense fallback={<RouteLoadingFallback />}>
-            <AdminLoginPage />
-          </React.Suspense>
-        }
-      />
-      <Route
-        path="/artist-portal"
-        element={
-          <ProtectedRoute>
-            <React.Suspense fallback={<RouteLoadingFallback />}>
-              <AdminDashboardPage />
-            </React.Suspense>
-          </ProtectedRoute>
         }
       />
       <Route path="*" element={<Home />} />

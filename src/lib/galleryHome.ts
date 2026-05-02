@@ -2,12 +2,12 @@
  * @license Apache-2.0
  */
 
-import { normalizeGalleryHomeData, normalizeMediaStorageRoot } from '@dmnstr8/artist-portal-sdk';
+import { normalizeMediaStorageRoot } from './publicData';
 import { assetUrl } from '../shared/utils/assetUrl';
 
 export type MediaBucket = 'gallery' | 'artist' | 'products';
 
-export { normalizeGalleryHomeData, normalizeMediaStorageRoot };
+export { normalizeMediaStorageRoot };
 
 const DEFAULT_BUCKET_FOLDER: Record<MediaBucket, string> = {
   gallery: 'gallery',
@@ -33,7 +33,7 @@ function joinPath(...parts: string[]): string {
 export function resolveMediaSrc(
   input: string,
   bucket: MediaBucket,
-  storageRoot: string | null | undefined = ''
+  storageRoot: string | null | undefined = '',
 ): string {
   const raw = String(input ?? '').trim();
   if (!raw) return '';
@@ -44,12 +44,10 @@ export function resolveMediaSrc(
   const fileName = normalized.split('/').pop() || normalized;
   const buildBucketPath = (name: string) => assetUrl(joinPath(root, folder, encodeURIComponent(name)));
 
-  // Already in current bucket path (with or without configured root).
   if (normalized.startsWith(`${folder}/`) || (root && normalized.startsWith(`${root}/${folder}/`))) {
     return assetUrl(normalized);
   }
 
-  // Backward compatibility for legacy stored paths after media re-org.
   if (bucket === 'gallery') {
     if (normalized.startsWith('portfolio-')) return buildBucketPath(fileName);
   }
@@ -67,17 +65,9 @@ export function resolveMediaSrc(
   return buildBucketPath(raw);
 }
 
-/** Short uppercase slug derived from image path for admin display (not stored). */
-export function galleryTileDisplaySlug(src: string): string {
-  const t = src.trim().split('?')[0];
-  const file = t.split('/').pop() || t;
-  const base = file.replace(/\.[^.]+$/i, '');
-  return base.replace(/[^a-zA-Z0-9]+/g, '').toUpperCase() || 'TILE';
-}
-
 export function resolveGalleryImageSrc(
   src: string,
-  storageRoot: string | null | undefined = ''
+  storageRoot: string | null | undefined = '',
 ): string {
   const s = src.trim();
   if (!s) return resolveMediaSrc('portfolio-1.jpeg', 'gallery', storageRoot);

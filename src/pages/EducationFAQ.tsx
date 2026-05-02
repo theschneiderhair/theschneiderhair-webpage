@@ -1,216 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'motion/react';
-import { ChevronDown, ArrowRight, CheckCircle2, Download, BookOpen, X, Ticket, Calendar } from 'lucide-react';
+import { ChevronDown, ArrowRight, CheckCircle2, Download, BookOpen, Ticket, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { createPortal } from 'react-dom';
 import ImageWithFallback from '../components/ImageWithFallback';
 import VideoCarouselLightboxSection from '../components/VideoCarouselLightboxSection';
 
-import { collection, addDoc, serverTimestamp, doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 import { assetUrl } from '../shared/utils/assetUrl';
 import {
-  CONTENT_DATA_SOURCE_MODE_EVENT,
   getFaqWithFallback,
   getSettingsWithFallback,
   getWidgetsWithFallback,
-} from '@dmnstr8/artist-portal-sdk';
+} from '../lib/publicData';
 import { alertDialog } from '../shared/ui/dialogs';
 import {
   COOKIE_CONSENT_UPDATED_EVENT,
   hasConsentFor,
   openConsentPreferences,
 } from '../lib/cookieConsent';
+import { formatCopy } from '../content/siteCopy';
 import { useSiteCopy } from '../context/SiteCopyContext';
-
-const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const { siteCopy } = useSiteCopy();
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
-
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
-  }, [isOpen]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('sending');
-    
-    try {
-      const formData = new FormData(e.target as HTMLFormElement);
-      const payload = Object.fromEntries(formData.entries());
-      
-      // 1. Silent backup to cloud database
-      try {
-        await addDoc(collection(db, 'inquiries'), {
-          ...payload,
-          createdAt: serverTimestamp(),
-          source: 'EducationFAQ'
-        });
-      } catch (dbError) {
-        console.warn('Silent backup to cloud failed:', dbError);
-      }
-
-      // 2. Fetch target email from settings
-      let targetEmail = "diggs.it.accnt@gmail.com"; // Default for Dev
-      try {
-        const settingsSnap = await getDoc(doc(db, 'settings', 'general'));
-        if (settingsSnap.exists() && settingsSnap.data().contactEmail) {
-          targetEmail = settingsSnap.data().contactEmail;
-        }
-      } catch (err) {
-        console.warn("Failed to fetch custom contact email, using default", err);
-      }
-
-      // 3. Main Email Submission via FormSubmit
-      const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
-        method: "POST",
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          ...payload,
-          _subject: siteCopy.educationContactModal.formSubject,
-          _template: "table",
-          _captcha: "false"
-        })
-      });
-
-      if (response.ok) {
-        setStatus('success');
-        setTimeout(() => {
-          onClose();
-          setStatus('idle');
-        }, 3000);
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      console.error(error);
-      setStatus('idle');
-      // For simplicity in this UI, we just alert if it fails
-      alertDialog(siteCopy.educationContactModal.errorAlert);
-    }
-  };
-
-  if (!isOpen) return null;
-  if (typeof document === 'undefined') return null;
-
-  return createPortal(
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="admin-inquiry-modal-backdrop fixed inset-0 z-[1200] flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="bg-stone-50 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden relative"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
-      >
-          <button 
-            onClick={onClose}
-            className="absolute top-6 right-6 text-stone-400 hover:text-stone-800 transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          
-          <div className="p-8 md:p-12">
-            <h3 className="text-3xl font-serif text-stone-800 mb-2">{siteCopy.educationContactModal.title}</h3>
-            <p className="text-stone-500 font-light text-sm mb-8 leading-relaxed">{siteCopy.educationContactModal.intro}</p>
-
-            {status === 'success' ? (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                className="h-[300px] flex flex-col items-center justify-center text-center space-y-4"
-              >
-                <div className="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center text-gold mb-2">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
-                <h4 className="text-xl font-serif text-stone-800">{siteCopy.educationContactModal.successTitle}</h4>
-                <p className="text-stone-500 font-light text-sm">{siteCopy.educationContactModal.successBody}</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400">
-                    {siteCopy.educationContactModal.nameLabel}
-                  </label>
-                  <input 
-                    required 
-                    type="text" 
-                    id="name"
-                    name="name"
-                    disabled={status === 'sending'}
-                    className="w-full bg-stone-100 border-none rounded-md px-4 py-3 text-stone-800 text-sm focus:ring-1 focus:ring-gold focus:outline-none transition-shadow disabled:opacity-50" 
-                    placeholder={siteCopy.educationContactModal.namePlaceholder}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400">
-                    {siteCopy.educationContactModal.emailLabel}
-                  </label>
-                  <input 
-                    required 
-                    type="email" 
-                    id="email"
-                    name="email"
-                    disabled={status === 'sending'}
-                    className="w-full bg-stone-100 border-none rounded-md px-4 py-3 text-stone-800 text-sm focus:ring-1 focus:ring-gold focus:outline-none transition-shadow disabled:opacity-50" 
-                    placeholder={siteCopy.educationContactModal.emailPlaceholder}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400">
-                    {siteCopy.educationContactModal.messageLabel}
-                  </label>
-                  <textarea 
-                    required 
-                    id="message"
-                    name="message"
-                    rows={4}
-                    disabled={status === 'sending'}
-                    className="w-full bg-stone-100 border-none rounded-md px-4 py-3 text-stone-800 text-sm focus:ring-1 focus:ring-gold focus:outline-none transition-shadow resize-none disabled:opacity-50" 
-                    placeholder={siteCopy.educationContactModal.messagePlaceholder}
-                  ></textarea>
-                </div>
-                <button 
-                  type="submit" 
-                  disabled={status === 'sending'}
-                  className="w-full bg-stone-900 text-stone-50 rounded-md py-4 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-gold transition-colors duration-300 disabled:opacity-50 flex justify-center items-center h-[46px]"
-                >
-                  {status === 'sending' ? (
-                    <div className="w-4 h-4 border-2 border-stone-50 border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <span>{siteCopy.educationContactModal.send}</span>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
-      </motion.div>
-    </motion.div>,
-    document.body
-  );
-};
 
 export default function EducationFAQ() {
   const { siteCopy } = useSiteCopy();
   const [faqCategories, setFaqCategories] = useState<{ category: string; items: { q: string; a: string }[] }[]>([]);
   const [activeCategoryIdx, setActiveCategoryIdx] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contactEmailTo, setContactEmailTo] = useState('info@theschneiderhair.com');
   const [showContactForm, setShowContactForm] = useState(true);
+  const [showBookSection, setShowBookSection] = useState(true);
+  const [showClassesSection, setShowClassesSection] = useState(true);
+  const [showVideoSection, setShowVideoSection] = useState(true);
   const [paymentWidgetProvider, setPaymentWidgetProvider] = useState<'payhip'>('payhip');
   const [paymentWidgetProductId, setPaymentWidgetProductId] = useState('4GCTc');
   const [allowPaymentWidget, setAllowPaymentWidget] = useState(() => hasConsentFor('functional'));
-  const [refreshKey, setRefreshKey] = useState(0);
   const ebookImageRef = React.useRef<HTMLDivElement | null>(null);
   const ebookImageInView = useInView(ebookImageRef, { amount: 0.35 });
   const masterclassImageRef = React.useRef<HTMLDivElement | null>(null);
@@ -230,17 +51,15 @@ export default function EducationFAQ() {
         })),
       );
       setShowContactForm(settings.showContactForm !== false);
+      setShowBookSection(settings.showBookSection !== false);
+      setShowClassesSection(settings.showClassesSection !== false);
+      setShowVideoSection(settings.showVideoSection !== false);
+      setContactEmailTo(settings.contactEmail?.trim() || 'info@theschneiderhair.com');
       setPaymentWidgetProvider(widgets.paymentWidgetProvider === 'payhip' ? 'payhip' : 'payhip');
       setPaymentWidgetProductId(widgets.showPaymentWidget ? String(widgets.paymentWidgetProductId ?? '4GCTc') : '');
     };
     
     fetchFaq();
-  }, [refreshKey]);
-
-  useEffect(() => {
-    const onChanged = () => setRefreshKey((k) => k + 1);
-    window.addEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
-    return () => window.removeEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
   }, []);
 
   useEffect(() => {
@@ -250,6 +69,7 @@ export default function EducationFAQ() {
   }, []);
 
   useEffect(() => {
+    if (!showBookSection) return;
     if (paymentWidgetProvider !== 'payhip') return;
     if (!paymentWidgetProductId.trim()) return;
     if (!allowPaymentWidget) return;
@@ -263,12 +83,39 @@ export default function EducationFAQ() {
     return () => {
       // Keep loaded globally once injected.
     };
-  }, [paymentWidgetProvider, paymentWidgetProductId, allowPaymentWidget]);
+  }, [showBookSection, paymentWidgetProvider, paymentWidgetProductId, allowPaymentWidget]);
 
   const ebookAccessHref =
     paymentWidgetProvider === 'payhip' && paymentWidgetProductId.trim() && allowPaymentWidget
       ? `https://payhip.com/b/${paymentWidgetProductId.trim()}`
       : '#';
+
+  const openEducationContactMailto = () => {
+    try {
+      const to = contactEmailTo.trim() || 'info@theschneiderhair.com';
+      const subject = siteCopy.educationContactModal.formSubject;
+      const openedAt = new Intl.DateTimeFormat(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short',
+      }).format(new Date());
+      const bodyRaw = formatCopy(siteCopy.educationContactModal.mailtoDirectBody, { date: openedAt });
+      const maxLen = 1800;
+      const body =
+        bodyRaw.length > maxLen
+          ? `${bodyRaw.slice(0, maxLen - 100)}\n\n[Truncated — continue in your mail app.]`
+          : bodyRaw;
+      const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const link = document.createElement('a');
+      link.href = href;
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      console.error(e);
+      alertDialog(siteCopy.educationContactModal.errorAlert);
+    }
+  };
 
   return (
     <div className="pt-32 pb-32 px-8 min-h-[80vh] flex flex-col pt-40">
@@ -291,6 +138,7 @@ export default function EducationFAQ() {
         </motion.div>
 
         {/* Ebook Promotional Section */}
+        {showBookSection && (
         <motion.div 
           id="ebook"
           initial={{ opacity: 0, y: 30 }}
@@ -361,8 +209,10 @@ export default function EducationFAQ() {
             </div>
           </div>
         </motion.div>
+        )}
 
         {/* Event Tickets Section */}
+        {showClassesSection && (
         <motion.div 
           id="events"
           initial={{ opacity: 0, y: 30 }}
@@ -430,6 +280,7 @@ export default function EducationFAQ() {
             </div>
           </div>
         </motion.div>
+        )}
 
         {/* FAQ Accordion */}
         <div className="space-y-4 md:space-y-8">
@@ -486,9 +337,11 @@ export default function EducationFAQ() {
           })}
         </div>
 
-        <div className="mt-20">
-          <VideoCarouselLightboxSection />
-        </div>
+        {showVideoSection && (
+          <div className="mt-20">
+            <VideoCarouselLightboxSection />
+          </div>
+        )}
 
         {showContactForm && (
           <motion.div 
@@ -500,8 +353,9 @@ export default function EducationFAQ() {
             <div className="absolute top-[-50%] right-[-10%] w-[500px] h-[500px] bg-gold rounded-full blur-[100px] opacity-10 pointer-events-none" />
             <h3 className="text-3xl font-serif tracking-tight relative z-10">{siteCopy.educationFaqPage.contactSectionTitle}</h3>
             <p className="text-stone-400 font-light max-w-md relative z-10">{siteCopy.educationFaqPage.contactSectionBody}</p>
-            <button 
-              onClick={() => setIsModalOpen(true)}
+            <button
+              type="button"
+              onClick={openEducationContactMailto}
               className="on-dark-surface inline-block mt-4 px-8 py-4 bg-stone-50 text-stone-900 border border-stone-800 rounded-md text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-gold hover:text-stone-50 hover:border-gold transition-colors duration-300 relative z-10"
             >
               {siteCopy.educationFaqPage.contactSectionCta}
@@ -509,8 +363,6 @@ export default function EducationFAQ() {
           </motion.div>
         )}
       </div>
-
-      {showContactForm && <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

@@ -3,19 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, useState } from 'react';
-
-import { CONTENT_DATA_SOURCE_MODE_EVENT } from '@dmnstr8/artist-portal-sdk';
-
-/** Bumps when the admin toggles local vs cloud content source in this browser. */
+/** Static build: content is always loaded from `public/data/*.json` (no live source toggle). */
 export function useContentSourceRefreshKey(): number {
-  const [refreshKey, setRefreshKey] = useState(0);
-  useEffect(() => {
-    const onChanged = () => setRefreshKey((k) => k + 1);
-    window.addEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
-    return () => {
-      window.removeEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
-    };
-  }, []);
-  return refreshKey;
+  return 0;
 }

@@ -9,13 +9,12 @@ import { useEffect, useMemo, useState } from 'react';
 import ImageWithFallback from '../components/ImageWithFallback';
 import { useSiteCopy } from '../context/SiteCopyContext';
 import { formatCopy } from '../content/siteCopy';
+import { resolveGalleryImageSrc } from '../lib/galleryHome';
 import {
-  CONTENT_DATA_SOURCE_MODE_EVENT,
-  GALLERY_HOME_UPDATED_EVENT,
   getGalleryHomeWithFallback,
   getSettingsWithFallback,
-} from '@dmnstr8/artist-portal-sdk';
-import { normalizeMediaStorageRoot, resolveGalleryImageSrc } from '../lib/galleryHome';
+  normalizeMediaStorageRoot,
+} from '../lib/publicData';
 import type { GalleryHomeData } from '../types/domain';
 
 import { GalleryLightbox } from './GalleryLightbox';
@@ -27,7 +26,6 @@ export function Portfolio() {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [gallery, setGallery] = useState<GalleryHomeData | null>(null);
   const [mediaStorageRoot, setMediaStorageRoot] = useState('');
-  const [galleryRefreshKey, setGalleryRefreshKey] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(
     () => (typeof window !== 'undefined' ? window.innerWidth < MOBILE_BREAKPOINT : false)
   );
@@ -49,16 +47,6 @@ export function Portfolio() {
     })();
     return () => {
       cancelled = true;
-    };
-  }, [galleryRefreshKey]);
-
-  useEffect(() => {
-    const bump = () => setGalleryRefreshKey((k) => k + 1);
-    window.addEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, bump as EventListener);
-    window.addEventListener(GALLERY_HOME_UPDATED_EVENT, bump as EventListener);
-    return () => {
-      window.removeEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, bump as EventListener);
-      window.removeEventListener(GALLERY_HOME_UPDATED_EVENT, bump as EventListener);
     };
   }, []);
 

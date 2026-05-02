@@ -12,7 +12,7 @@ import {
   hasConsentFor,
   openConsentPreferences,
 } from '../lib/cookieConsent';
-import { getWidgetsWithFallback } from '@dmnstr8/artist-portal-sdk';
+import { getWidgetsWithFallback } from '../lib/publicData';
 
 export function HomeVideoCarousel() {
   const { siteCopy } = useSiteCopy();
@@ -60,8 +60,11 @@ export function HomeVideoCarousel() {
   if (!showSocialWidget) return null;
 
   return (
-    <section className="py-24 md:py-32 px-4 sm:px-8 bg-stone-100 border-t border-stone-200/60" aria-labelledby="home-videos-heading">
-      <div className="max-w-[1720px] mx-auto">
+    <section
+      className="py-24 md:py-32 px-4 sm:px-8 bg-stone-100 border-t border-stone-200/60 overflow-x-hidden"
+      aria-labelledby="home-videos-heading"
+    >
+      <div className="max-w-[1720px] mx-auto min-w-0">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 md:mb-16">
           <div className="space-y-4">
             <h2 id="home-videos-heading" className="text-4xl md:text-6xl tracking-tighter text-stone-800 leading-none">
@@ -86,8 +89,7 @@ export function HomeVideoCarousel() {
         ) : taggboxWidgetId ? (
           <div
             key={taggboxWidgetId}
-            className="taggbox"
-            style={{ width: '100%', height: '100%', overflow: 'auto' }}
+            className="taggbox w-full max-w-full min-w-0 overflow-x-hidden"
             data-widget-id={taggboxWidgetId}
             data-website="1"
           />

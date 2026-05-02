@@ -1,41 +1,31 @@
 {
-  "name": "client-theschneiderhair",
+  "name": "theschneider.hair",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    
-    "dev": "vite --port=3000 --host=0.0.0.0",
+    "dev": "vite --port=3000 --host=0.0.0.0 --mode production",
     "dev:release": "vite --port=4000 --host=0.0.0.0 --mode release",
-    
     "build": "vite build --mode production",
-    "build:production": "vite build --mode production",
     "build:release": "vite build --mode release",
-    
+    "deploy:hosting:release": "pnpm run build:release && firebase deploy --only hosting -P release",
+    "deploy:hosting:preview:release": "pnpm run build:release && firebase hosting:channel:deploy preview -P release",
+    "deploy:live": "pnpm run deploy:hosting:release",
     "preview": "vite preview --port=3000",
     "lint": "tsc --noEmit",
-
+    "static:legal": "node scripts/render-static-legal-pages.mjs",
     "deploy:rules": "pnpm run deploy:rules:production",
     "deploy:rules:production": "firebase deploy --only firestore:rules -P production",
-    "deploy:rules:release": "firebase deploy --only firestore:rules -P release",
-    
-    "deploy:hosting:production": "pnpm run build:production && firebase deploy --only hosting -P production",
-    "deploy:hosting:release": "pnpm run build:release && firebase deploy --only hosting -P release",
-    "deploy:live": "pnpm run deploy:hosting:release"
-  
-  
-  
-  
+    "deploy:rules:release": "firebase deploy --only firestore:rules -P release"
   },
   "dependencies": {
-    "@dmnstr8/artist-portal-sdk": "^0.1.10",
     "@tailwindcss/vite": "^4.2.4",
-    "firebase": "^12.12.1",
     "lucide-react": "^0.546.0",
     "motion": "^12.38.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2"
+    "react-router-dom": "^7.14.2",
+    "theschneider.hair": "link:"
   },
   "devDependencies": {
     "@types/node": "^22.19.17",
@@ -44,5 +34,13 @@
     "tailwindcss": "^4.2.4",
     "typescript": "~5.8.3",
     "vite": "^6.4.2"
+  },
+  "pnpm": {
+    "allowedDeprecatedVersions": {
+      "glob": "*",
+      "json-ptr": "*",
+      "node-domexception": "*",
+      "uuid": "*"
+    }
   }
 }

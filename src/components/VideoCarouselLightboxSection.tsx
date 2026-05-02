@@ -1,11 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import {
-  CONTENT_DATA_SOURCE_MODE_EVENT,
-  getVideoLinksWithFallback,
-  videoLinksToYoutubeIds,
-} from '@dmnstr8/artist-portal-sdk';
+import { getVideoLinksWithFallback, videoLinksToYoutubeIds } from '../lib/publicData';
 import { formatCopy } from '../content/siteCopy';
 import { useSiteCopy } from '../context/SiteCopyContext';
 
@@ -128,7 +124,6 @@ export default function VideoCarouselLightboxSection() {
   const tabletLandscapeWideQuery =
     '(min-width: 768px) and (max-width: 1199px), (min-width: 1200px) and (max-width: 1400px) and (orientation: landscape)';
   const [youtubeIds, setYoutubeIds] = useState<string[]>([]);
-  const [refreshKey, setRefreshKey] = useState(0);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const cyclePxRef = useRef(0);
   const [isTabletViewport, setIsTabletViewport] = useState(
@@ -145,12 +140,6 @@ export default function VideoCarouselLightboxSection() {
     return () => {
       cancelled = true;
     };
-  }, [refreshKey]);
-
-  useEffect(() => {
-    const onChanged = () => setRefreshKey((k) => k + 1);
-    window.addEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
-    return () => window.removeEventListener(CONTENT_DATA_SOURCE_MODE_EVENT, onChanged as EventListener);
   }, []);
 
   const loopIds = useMemo(() => [...youtubeIds, ...youtubeIds], [youtubeIds]);
@@ -272,14 +261,14 @@ export default function VideoCarouselLightboxSection() {
   return (
     <section
       className="on-camera-section py-24 md:py-32 px-4 sm:px-8 bg-stone-100 border-t border-stone-200/60"
-      aria-labelledby="home-videos-heading"
+      aria-labelledby="on-camera-heading"
       onMouseEnter={() => setStripHovered(true)}
       onMouseLeave={() => setStripHovered(false)}
     >
       <div className="max-w-[1720px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 md:mb-16">
           <div className="space-y-4">
-            <h2 id="home-videos-heading" className="text-4xl md:text-6xl tracking-tighter text-stone-800 leading-none">
+            <h2 id="on-camera-heading" className="text-4xl md:text-6xl tracking-tighter text-stone-800 leading-none">
               {siteCopy.home.videoCarouselCamera.headingLine1}
               <span className="text-gold italic font-normal">{siteCopy.home.videoCarouselCamera.headingAccent}</span>
             </h2>

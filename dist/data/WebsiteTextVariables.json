@@ -4,6 +4,20 @@
     "siteName": "theschneider.hair",
     "instagramHandle": "@theschneider.hair"
   },
+  "siteLocation": {
+    "headingLine1": "Friedrichshain",
+    "headingLine2": "Studio",
+    "address": "Creative Co Working Space · Salon 31 Friseur\nGärtnerstraße 31\n10245 Berlin\nGermany",
+    "operatingHours": "Tuesday – Saturday\n10:00 – 19:00",
+    "mapsQuery": "Salon 31 Friseur, Gärtnerstraße 31, 10245 Berlin, Germany"
+  },
+  "impressum": {
+    "ownerName": "Dennis Schneider",
+    "tradingName": "theschneider.hair",
+    "addressLines": "Creative Co Working Space · Salon 31 Friseur\nGärtnerstraße 31\n10245 Berlin\nGermany",
+    "contactEmail": "theschneiderhair@gmail.com",
+    "contactPhone": ""
+  },
   "shared": {
     "backToHome": "Back to Home",
     "loading": "Loading...",
@@ -227,23 +241,13 @@
     "eventsTicketCta": "Book My Ticket",
     "eventsImageAlt": "Hair Styling Masterclass Berlin Event",
     "contactSectionTitle": "Still have questions?",
-    "contactSectionBody": "If you need more details about private mentoring, booking me for a salon masterclass, or anything else, don't hesitate to reach out.",
+    "contactSectionBody": "If you need more details about private mentoring, booking me for a salon masterclass, or anything else, use the button below—your default email app will open so you can send a message directly.",
     "contactSectionCta": "Contact Me Direct"
   },
   "educationContactModal": {
-    "title": "Direct Inquiry",
-    "intro": "Inquire about 1-on-1 shadow sessions, upcoming masterclasses, or general educational support. I typically respond within 48 hours.",
-    "successTitle": "Message Sent.",
-    "successBody": "Thank you for reaching out. I'll be in touch soon.",
-    "nameLabel": "Name",
-    "namePlaceholder": "Your full name",
-    "emailLabel": "Email Address",
-    "emailPlaceholder": "you@example.com",
-    "messageLabel": "Message",
-    "messagePlaceholder": "How can I help you?",
-    "send": "Send Message",
-    "formSubject": "Direct Inquiry: theSchneider.hair",
-    "errorAlert": "Something went wrong. Please try again later or contact the artist via Instagram."
+    "formSubject": "Education inquiry — theschneider.hair",
+    "mailtoDirectBody": "Hello,\n\n[Please write your message above this line.]\n\n────────────────────────────────────────\ntheschneider.hair · Website contact\nSource: Education & FAQ page\nOpened: {{date}}\n────────────────────────────────────────",
+    "errorAlert": "We could not open your email program. Please try again or send a message directly to info@theschneiderhair.com."
   },
   "adminLoginPage": {
     "databaseSyncing": "Syncing...",

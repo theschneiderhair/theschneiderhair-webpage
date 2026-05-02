@@ -8,7 +8,6 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import AppRoutes from './app/AppRoutes';
 import {
-  AdminLeaveAuthGuard,
   CookieConsent,
   Footer,
   Home,
@@ -25,7 +24,6 @@ export default function App() {
 
   return (
     <Router>
-      <AdminLeaveAuthGuard />
       <ScrollToAnchor />
       <WidgetManager />
       <div className="min-h-screen flex flex-col w-full overflow-x-hidden relative">
@@ -36,10 +34,6 @@ export default function App() {
             ArtistsPage={ArtistsPage}
             EducationFAQPage={EducationFAQPage}
             RecommendedProductsPage={RecommendedProductsPage}
-            LegalPage={LegalPage}
-            TermsPage={TermsPage}
-            AdminLoginPage={AdminLoginPage}
-            AdminDashboardPage={AdminDashboardPage}
           />
         </div>
         <Footer />
@@ -52,7 +46,3 @@ export default function App() {
 const EducationFAQPage = React.lazy(() => import('./pages/EducationFAQ'));
 const ArtistsPage = React.lazy(() => import('./pages/Artists'));
 const RecommendedProductsPage = React.lazy(() => import('./pages/RecommendedProducts'));
-const LegalPage = React.lazy(() => import('./pages/Legal'));
-const TermsPage = React.lazy(() => import('./pages/Terms'));
-const AdminLoginPage = React.lazy(() => import('./pages/AdminLogin'));
-const AdminDashboardPage = React.lazy(() => import('@dmnstr8/artist-portal-sdk/admin'));

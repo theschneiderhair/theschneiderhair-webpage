@@ -1,5 +1,4 @@
 import React, {createContext, useContext, useMemo} from 'react';
-import {legalSiteCopy} from '../content/legalSiteCopy';
 import {
   defaultWebsiteTextVariables,
   formatCopy as formatCopyFn,
@@ -20,7 +19,7 @@ function cloneWebsiteTextVariables(data: WebsiteTextVariables): WebsiteTextVaria
 
 export function SiteCopyProvider({children}: {children: React.ReactNode}) {
   const siteCopy = useMemo(
-    () => ({...cloneWebsiteTextVariables(defaultWebsiteTextVariables), ...legalSiteCopy}) as SiteCopy,
+    () => cloneWebsiteTextVariables(defaultWebsiteTextVariables) as SiteCopy,
     []
   );
 

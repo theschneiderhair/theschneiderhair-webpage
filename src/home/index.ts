@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export { AdminLeaveAuthGuard } from './AdminLeaveAuthGuard';
 export { AboutArtist } from './AboutArtist';
 export { CookieConsent } from './CookieConsent';
 export { FinalCTA } from './FinalCTA';

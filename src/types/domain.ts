@@ -1,5 +1,23 @@
-/** Keep in sync with `packages/artist-portal-sdk/src/domain.ts` (published SDK). */
-export type DataSource = 'firebase' | 'local' | 'unknown';
+/** Location block (from `public/data/WebsiteTextVariables.json` → `siteLocation`). */
+export interface SiteLocationSettings {
+  headingLine1: string;
+  headingLine2: string;
+  address: string;
+  operatingHours: string;
+  /** Used when `googleMapsEmbedUrl` is not set. */
+  mapsQuery?: string;
+  /** Full iframe src when you need an exact embed instead of `mapsQuery`. */
+  googleMapsEmbedUrl?: string;
+}
+
+/** Legal / footer contact copy (from `public/data/WebsiteTextVariables.json` → `impressum`). */
+export interface ImpressumJsonSettings {
+  ownerName: string;
+  tradingName: string;
+  addressLines: string;
+  contactEmail: string;
+  contactPhone: string;
+}
 
 export interface Review {
   id: string;
@@ -47,17 +65,24 @@ export interface SettingsData {
   themeDefault: 'light' | 'dark';
   /** Optional folder inserted before media buckets (root when empty), e.g. "Images". */
   mediaStorageRoot: string;
-  autoLogoutLeavingAdmin: boolean;
+  autoLogoutLeavingAdmin?: boolean;
   showThemeSelector: boolean;
   showArtistsPage: boolean;
   showProductsPage: boolean;
   showReviewsSection: boolean;
   showPricingSection: boolean;
-  roundPricesUpToWholeAmount: boolean;
+  roundPricesUpToWholeAmount?: boolean;
+  /** YouTube "On Camera" strip (home + education FAQ page). */
   showVideoSection: boolean;
+  /** Taggbox Instagram embed on the homepage. Omitted = shown. */
+  showInstagramTagbox?: boolean;
   /** Homepage portfolio (#portfolio) */
   showGallerySection: boolean;
   showFaqPage: boolean;
+  /** Education page: masterclass / events (#events). Omitted = shown. */
+  showClassesSection?: boolean;
+  /** Education page: ebook promo (#ebook). Omitted = shown. */
+  showBookSection?: boolean;
   showContactForm: boolean;
 }
 
