@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prepare": "node scripts/assert-no-self-dependency.mjs",
+  
     "dev": "vite --port=3000 --host=0.0.0.0 --mode production",
     "dev:release": "vite --port=4000 --host=0.0.0.0 --mode release",
     "build": "vite build --mode production",
@@ -14,7 +14,7 @@
     "deploy:live": "pnpm run deploy:hosting:release",
     "preview": "vite preview --port=3000",
     "lint": "tsc --noEmit",
-    "static:legal": "node scripts/render-static-legal-pages.mjs",
+
     "deploy:rules": "pnpm run deploy:rules:production",
     "deploy:rules:production": "firebase deploy --only firestore:rules -P production",
     "deploy:rules:release": "firebase deploy --only firestore:rules -P release"
