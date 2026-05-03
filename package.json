@@ -5,22 +5,20 @@
   "type": "module",
   "scripts": {
   
-    "dev": "vite --port=3000 --host=0.0.0.0 --mode production",
-    "dev:release": "vite --port=4000 --host=0.0.0.0 --mode release",
-    "build": "vite build --mode production",
-    "build:release": "vite build --mode release",
-    "deploy:hosting:release": "pnpm run build:release && firebase deploy --only hosting -P release",
-    "deploy:hosting:preview": "pnpm run build:release && firebase hosting:channel:deploy preview -P release",
-    "deploy:live": "pnpm run deploy:hosting:release",
-    "preview": "vite preview --port=3000",
-    "lint": "tsc --noEmit",
+    "dev":              "vite --port=3000 --host=0.0.0.0",
 
-    "deploy:rules": "pnpm run deploy:rules:production",
-    "deploy:rules:production": "firebase deploy --only firestore:rules -P production",
-    "deploy:rules:release": "firebase deploy --only firestore:rules -P release"
+    "build":            "vite build",
+    "build:release":    "vite build --mode release",
+    
+    "deploy:hosting:preview":  "pnpm run build:release && firebase hosting:channel:deploy preview -P release",
+    "deploy:hosting:live":     "pnpm run build:release && firebase deploy --only hosting -P release",
+   
+    "lint": "tsc --noEmit"
+
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
+    "firebase-tools": "^15.16.0",
     "lucide-react": "^0.546.0",
     "motion": "^12.38.0",
     "react": "^19.2.5",
@@ -32,7 +30,6 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
-    "firebase-tools": "^15.16.0",
     "tailwindcss": "^4.2.4",
     "typescript": "~5.8.3",
     "vite": "^6.4.2"
