@@ -90,7 +90,7 @@
       "openImageAriaTemplate": "Open portfolio image {{n}}"
     },
     "hero": {
-      "badge": "Berlin Friedrichshain",
+      "badge": "",
       "titleLine1": "Master ",
       "titleLine2": "Blonding & ",
       "titleAccent": "Extensions",

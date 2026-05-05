@@ -19,6 +19,9 @@ import type { NavLinkItem } from './navTypes';
 export function Nav() {
   const { siteCopy } = useSiteCopy();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showTopBanner, setShowTopBanner] = useState(false);
+  const [hideForBottomReveal, setHideForBottomReveal] = useState(false);
+  const [hasScrolledDownOnHome, setHasScrolledDownOnHome] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [showThemeSelector, setShowThemeSelector] = useState(false);
   const [showArtistsPage, setShowArtistsPage] = useState(false);
@@ -62,6 +65,90 @@ export function Nav() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [menuOpen]);
+
+  useEffect(() => {
+    const handleHeroScrubProgress = (event: Event) => {
+      if (location.pathname !== '/') {
+        setShowTopBanner(true);
+        return;
+      }
+
+      const customEvent = event as CustomEvent<number>;
+      const progress = customEvent.detail ?? 0;
+      setShowTopBanner(hasScrolledDownOnHome && progress >= 0.98);
+    };
+
+    // Hide the top banner on home until hero scrub reaches the end.
+    if (location.pathname === '/') {
+      setShowTopBanner(false);
+    } else {
+      setShowTopBanner(true);
+    }
+
+    window.addEventListener('hero-scrub-progress', handleHeroScrubProgress as EventListener);
+    return () => {
+      window.removeEventListener('hero-scrub-progress', handleHeroScrubProgress as EventListener);
+    };
+  }, [location.pathname, hasScrolledDownOnHome]);
+
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+
+    const onWheel = (event: WheelEvent) => {
+      if (event.deltaY > 0) {
+        setHasScrolledDownOnHome(true);
+        setShowTopBanner(true);
+      }
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      startTouchY = event.touches[0]?.clientY ?? null;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      const currentY = event.touches[0]?.clientY;
+      if (startTouchY !== null && currentY !== undefined && startTouchY - currentY > 2) {
+        setHasScrolledDownOnHome(true);
+        setShowTopBanner(true);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ') {
+        setHasScrolledDownOnHome(true);
+        setShowTopBanner(true);
+      }
+    };
+
+    let startTouchY: number | null = null;
+    window.addEventListener('wheel', onWheel, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onBottomReveal = (event: Event) => {
+      const customEvent = event as CustomEvent<boolean>;
+      setHideForBottomReveal(Boolean(customEvent.detail));
+    };
+    window.addEventListener('hero-bottom-reveal', onBottomReveal as EventListener);
+    return () => {
+      window.removeEventListener('hero-bottom-reveal', onBottomReveal as EventListener);
+    };
+  }, []);
+
+  const bannerActive = showTopBanner && !hideForBottomReveal;
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('site-nav-banner-visible', { detail: bannerActive }));
+  }, [bannerActive]);
 
   useEffect(() => {
     let cancelled = false;
@@ -190,7 +277,20 @@ export function Nav() {
 
   return (
     <>
-      <nav className="site-nav-bar fixed top-0 w-full z-50 glass shadow-sm shadow-stone-900/5 dark:shadow-black/40">
+      <motion.nav
+        initial={false}
+        animate={{
+          opacity: showTopBanner && !hideForBottomReveal ? 1 : 0,
+          y: showTopBanner && !hideForBottomReveal ? 0 : -10,
+        }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className={`site-nav-bar fixed top-0 w-full z-50 transition-colors duration-500 ${
+          showTopBanner && !hideForBottomReveal
+            ? 'glass shadow-sm shadow-stone-900/5 dark:shadow-black/40'
+            : 'bg-transparent shadow-none'
+        }`}
+        style={{ pointerEvents: showTopBanner && !hideForBottomReveal ? 'auto' : 'none' }}
+      >
         <div className="site-nav-inner flex justify-between items-center px-5 sm:px-8 py-5 sm:py-6 max-w-[1920px] mx-auto">
           <motion.div
             className="flex items-center gap-5 sm:gap-8"
@@ -256,7 +356,7 @@ export function Nav() {
             )}
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       <AnimatePresence>
         {menuOpen && (

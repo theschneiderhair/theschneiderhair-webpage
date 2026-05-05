@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, useLocation } from 'react-router-dom';
 
 import AppRoutes from './app/AppRoutes';
 import {
@@ -24,6 +24,17 @@ export default function App() {
 
   return (
     <Router>
+      <AppLayout />
+    </Router>
+  );
+}
+
+function AppLayout() {
+  const location = useLocation();
+  const isHomeRoute = location.pathname === '/';
+
+  return (
+    <>
       <ScrollToAnchor />
       <WidgetManager />
       <div className="min-h-screen flex flex-col w-full overflow-x-hidden relative">
@@ -36,10 +47,10 @@ export default function App() {
             RecommendedProductsPage={RecommendedProductsPage}
           />
         </div>
-        <Footer />
+        {!isHomeRoute && <Footer />}
         <CookieConsent />
       </div>
-    </Router>
+    </>
   );
 }
 
